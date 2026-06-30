@@ -1,0 +1,14 @@
+/Users/laurengoss/git/book-bracket/bin/Debug/net10.0/book-bracket
+/Users/laurengoss/git/book-bracket/bin/Debug/net10.0/book-bracket.deps.json
+/Users/laurengoss/git/book-bracket/bin/Debug/net10.0/book-bracket.runtimeconfig.json
+/Users/laurengoss/git/book-bracket/bin/Debug/net10.0/book-bracket.dll
+/Users/laurengoss/git/book-bracket/bin/Debug/net10.0/book-bracket.pdb
+/Users/laurengoss/git/book-bracket/obj/Debug/net10.0/book-bracket.GeneratedMSBuildEditorConfig.editorconfig
+/Users/laurengoss/git/book-bracket/obj/Debug/net10.0/book-bracket.AssemblyInfoInputs.cache
+/Users/laurengoss/git/book-bracket/obj/Debug/net10.0/book-bracket.AssemblyInfo.cs
+/Users/laurengoss/git/book-bracket/obj/Debug/net10.0/book-bracket.csproj.CoreCompileInputs.cache
+/Users/laurengoss/git/book-bracket/obj/Debug/net10.0/book-bracket.dll
+/Users/laurengoss/git/book-bracket/obj/Debug/net10.0/refint/book-bracket.dll
+/Users/laurengoss/git/book-bracket/obj/Debug/net10.0/book-bracket.pdb
+/Users/laurengoss/git/book-bracket/obj/Debug/net10.0/book-bracket.genruntimeconfig.cache
+/Users/laurengoss/git/book-bracket/obj/Debug/net10.0/ref/book-bracket.dll
