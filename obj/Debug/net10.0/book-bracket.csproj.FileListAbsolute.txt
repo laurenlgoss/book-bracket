@@ -12,3 +12,10 @@
 /Users/laurengoss/git/book-bracket/obj/Debug/net10.0/book-bracket.pdb
 /Users/laurengoss/git/book-bracket/obj/Debug/net10.0/book-bracket.genruntimeconfig.cache
 /Users/laurengoss/git/book-bracket/obj/Debug/net10.0/ref/book-bracket.dll
+/Users/laurengoss/git/book-bracket/bin/Debug/net10.0/Microsoft.Extensions.DependencyInjection.dll
+/Users/laurengoss/git/book-bracket/bin/Debug/net10.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/Users/laurengoss/git/book-bracket/obj/Debug/net10.0/book-bracket.csproj.AssemblyReference.cache
+/Users/laurengoss/git/book-bracket/obj/Debug/net10.0/book-bracket.sourcelink.json
+/Users/laurengoss/git/book-bracket/obj/Debug/net10.0/book-bra.9C6A9A62.Up2Date
+/Users/laurengoss/git/book-bracket/bin/Debug/net10.0/Spectre.Console.dll
+/Users/laurengoss/git/book-bracket/bin/Debug/net10.0/Spectre.Console.Ansi.dll

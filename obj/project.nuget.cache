@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "khVrSjaAzdY=",
+  "dgSpecHash": "426bPmUbX0k=",
   "success": true,
   "projectFilePath": "/Users/laurengoss/git/book-bracket/book-bracket.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/laurengoss/.nuget/packages/microsoft.extensions.dependencyinjection/10.0.9/microsoft.extensions.dependencyinjection.10.0.9.nupkg.sha512",
+    "/Users/laurengoss/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/10.0.9/microsoft.extensions.dependencyinjection.abstractions.10.0.9.nupkg.sha512",
+    "/Users/laurengoss/.nuget/packages/spectre.console/0.57.1/spectre.console.0.57.1.nupkg.sha512",
+    "/Users/laurengoss/.nuget/packages/spectre.console.ansi/0.57.1/spectre.console.ansi.0.57.1.nupkg.sha512"
+  ],
   "logs": []
 }
