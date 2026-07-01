@@ -5,13 +5,13 @@ namespace book_bracket.Services
 {
     public class SingleEliminationTournament : ITournament
     {
-        private readonly List<ParticipantDto> _participants;
+        private const uint FirstRoundNumber = 1;
 
-        public SingleEliminationTournament(IReadOnlyList<ParticipantDto> participants)
+        public SingleEliminationTournament(List<ParticipantDto> participants)
         {
             ArgumentOutOfRangeException.ThrowIfLessThan(participants.Count, 2);
 
-            _participants = (List<ParticipantDto>)participants;
+            SetCurrentRoundMatches(participants);
         }
 
         public bool IsComplete => Winner is not null;
@@ -19,36 +19,21 @@ namespace book_bracket.Services
         public Dictionary<uint, List<MatchDto>> ResultsPerRoundNumber { get; private set; } = [];
         public List<MatchDto> Results => [.. ResultsPerRoundNumber.Values.SelectMany(results => results)];
         public List<Tuple<ParticipantDto, ParticipantDto?>>? CurrentRoundMatches { get; private set; } = [];
-        public uint RoundNumber { get; private set; } = 0;
+        public uint RoundNumber { get; private set; } = FirstRoundNumber;
 
         public void NextRound()
         {
-            uint previousRoundNumber = RoundNumber;
+            IEnumerable<ParticipantDto> lastRoundWinners =
+                ResultsPerRoundNumber[RoundNumber].Select(match => match.Winner);
 
-            IEnumerable<ParticipantDto> participants;
-
-            if (previousRoundNumber == 0 || ResultsPerRoundNumber.Count == 0)
+            if (lastRoundWinners.Count() == 1)
             {
-                participants = _participants;
-            }
-            else
-            {
-                participants = ResultsPerRoundNumber[previousRoundNumber].Select(match => match.Winner);
-            }
-
-            if (participants.Count() == 1)
-            {
-                Winner = participants.Single();
+                Winner = lastRoundWinners.Single();
 
                 return;
             }
 
-            CurrentRoundMatches = [.. participants.Chunk(2).Select(participants =>
-            {
-                ParticipantDto? participant2 = participants.Length >= 2 ? participants[1] : null;
-
-                return new Tuple<ParticipantDto, ParticipantDto?>(participants[0], participant2);
-            })];
+            SetCurrentRoundMatches(lastRoundWinners);
 
             RoundNumber++;
         }
@@ -69,6 +54,16 @@ namespace book_bracket.Services
             {
                 ResultsPerRoundNumber.TryAdd(RoundNumber, [matchDto]);
             }
+        }
+
+        private void SetCurrentRoundMatches(IEnumerable<ParticipantDto> participants)
+        {
+            CurrentRoundMatches = [.. participants.Chunk(2).Select(participants =>
+            {
+                ParticipantDto? participant2 = participants.Length >= 2 ? participants[1] : null;
+
+                return new Tuple<ParticipantDto, ParticipantDto?>(participants[0], participant2);
+            })];
         }
     }
 }

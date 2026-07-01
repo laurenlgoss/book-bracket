@@ -18,7 +18,7 @@ namespace book_bracket.Services
 
             do
             {
-                _userInterface.Write($"Begin round {tournament.RoundNumber}.");
+                _userInterface.Write($"--- Begin round {tournament.RoundNumber}. ---");
 
                 foreach (Tuple<ParticipantDto, ParticipantDto?> match in tournament.CurrentRoundMatches ?? [])
                 {
@@ -32,7 +32,7 @@ namespace book_bracket.Services
                     }
                     else
                     {
-                        _userInterface.Write($"{match.Item1.Name} vs. {match.Item2.Name}");
+                        _userInterface.Write($"[bold]{match.Item1.Name}[/] vs. [bold]{match.Item2.Name}[/]");
 
                         string winnerName = _userInterface.Choose("Which option do you prefer?",
                                                                   match.Item1.Name,
