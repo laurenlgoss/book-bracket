@@ -1,13 +1,17 @@
 using book_bracket.Models;
+using book_bracket.Models.Enums;
 using book_bracket.Services.Interfaces;
 using book_bracket.Utilities;
 
 namespace book_bracket.Services
 {
-    public class BookBracketApplication(IUserInterface userInterface) : IApplication
+    public class BookBracketApplication(IUserInterface userInterface,
+                                        ITournamentService tournamentService) : IApplication
     {
         private readonly IUserInterface _userInterface = userInterface
             ?? throw new ArgumentNullException(nameof(userInterface));
+        private readonly ITournamentService _tournamentService = tournamentService
+            ?? throw new ArgumentNullException(nameof(tournamentService));
 
         public void Run()
         {
@@ -17,13 +21,29 @@ namespace book_bracket.Services
 
             _userInterface.Write($"Thanks. Let's get started on your bracket for {year}.");
 
-            List<FavoriteBook> favoriteBooks = GetFavoriteBooks(year);
+            List<BookOfTheMonthDto> favoriteBooks = GetFavoriteBooks(year);
 
             _userInterface.Write("Thanks. Let's get started on comparing them.");
 
-            FavoriteBook winner = StartTournament(favoriteBooks);
+            string tournamentChoice = _userInterface.Choose("What kind of tournament do you want to use?",
+                                                            [.. Enum.GetValues<Tournament>().Select(type => type.ToString())]);
 
-            _userInterface.Write($"Congrats! Your {year} winner is {winner.Name} by {winner.Author}.");
+            _ = Enum.TryParse(tournamentChoice, true, out Tournament tournamentType);
+
+            List<ParticipantDto> participants = [.. favoriteBooks.Select(book =>
+            {
+                return new ParticipantDto()
+                {
+                  Id = book.Id,
+                  Name = book.ToString(),  
+                };
+            })];
+
+            ParticipantDto tournamentWinner = _tournamentService.Start(tournamentType, participants);
+
+            BookOfTheMonthDto bookOfTheYear = favoriteBooks.First(book => book.Id == tournamentWinner.Id);
+
+            _userInterface.Write($"[bold green]Congrats! Your {year} winner is {bookOfTheYear.Name} by {bookOfTheYear.Author}.[/]");
         }
 
         private uint GetYear()
@@ -45,7 +65,7 @@ namespace book_bracket.Services
             return year;
         }
 
-        private List<FavoriteBook> GetFavoriteBooks(uint year)
+        private List<BookOfTheMonthDto> GetFavoriteBooks(uint year)
         {
             IEnumerable<Month> months = Constants.Months;
 
@@ -56,7 +76,7 @@ namespace book_bracket.Services
                 months = months.Where(month => (int)month <= now.Month);
             }
 
-            List<FavoriteBook> favoriteBooks = [];
+            List<BookOfTheMonthDto> favoriteBooks = [];
 
             foreach (Month month in months)
             {
@@ -80,7 +100,7 @@ namespace book_bracket.Services
                     author = _userInterface.Read();
                 }
 
-                FavoriteBook favoriteBook = new()
+                BookOfTheMonthDto favoriteBook = new()
                 {
                     Author = author,
                     Name = name,
@@ -92,82 +112,6 @@ namespace book_bracket.Services
             }
 
             return favoriteBooks;
-        }
-
-        private FavoriteBook StartTournament(List<FavoriteBook> favoriteBooks)
-        {
-            List<Match> matches = [];
-            uint roundNumber = 1;
-
-            do
-            {
-                IEnumerable<FavoriteBook> books =
-                    matches.Count != 0 ? matches.Select(match => match.Winner) : favoriteBooks;
-
-                books = books.DistinctBy(book => book.Name);
-
-                matches = StartRound(books, roundNumber);
-
-                roundNumber++;
-            }
-            while (matches.Count > 1);
-
-            return matches.First().Winner;
-        }
-
-        private List<Match> StartRound(IEnumerable<FavoriteBook> favoriteBooks, uint roundNumber)
-        {
-            const int NumberOfBooksPerMatch = 2;
-
-            _userInterface.Write($"Begin round {roundNumber}.");
-
-            List<Match> matches = [];
-
-            foreach (FavoriteBook[] favoriteBookMatchUp in favoriteBooks.Chunk(NumberOfBooksPerMatch))
-            {
-                FavoriteBook option1 = favoriteBookMatchUp[0];
-                FavoriteBook? option2 = favoriteBookMatchUp.Length >= 2 ? favoriteBookMatchUp[1] : null;
-
-                Match match = StartMatch(option1, option2);
-
-                matches.Add(match);
-            }
-
-            return matches;
-        }
-
-        private Match StartMatch(FavoriteBook option1, FavoriteBook? option2)
-        {
-            FavoriteBook matchWinner;
-
-            if (option2 is null)
-            {
-                _userInterface.Write($"No option 2. Defaulting to {option1.Name} as winner for this match.");
-
-                matchWinner = option1;
-            }
-            else
-            {
-                _userInterface.Write($"{option1} vs. {option2}");
-
-                FavoriteBook[] options = [option1, option2];
-
-                string winnerName = _userInterface.Choose("Which book do you prefer?",
-                                                          [.. options.Select(option => option.ToString())]);
-
-                matchWinner = options.First(book => winnerName.Contains(book.ToString()));
-            }
-
-            _userInterface.Write($"[bold green]Winner: {matchWinner}[/]");
-
-            Match match = new()
-            {
-                Option1 = option1,
-                Option2 = option2,
-                Winner = matchWinner,
-            };
-
-            return match;
         }
     }
 }

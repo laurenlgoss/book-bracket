@@ -1,6 +1,8 @@
+using book_bracket.Models.Enums;
+
 namespace book_bracket.Models
 {
-    public class FavoriteBook : Book
+    public class BookOfTheMonthDto : BookDto
     {
         public required Month MonthRead { get; init; }
         public required uint YearRead { get; init; }

@@ -1,4 +1,4 @@
-namespace book_bracket.Models
+namespace book_bracket.Models.Enums
 {
     public enum Month
     {
