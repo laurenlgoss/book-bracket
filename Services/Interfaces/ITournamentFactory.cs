@@ -5,6 +5,6 @@ namespace book_bracket.Services.Interfaces
 {
     public interface ITournamentFactory
     {
-        ITournament Create(Tournament type, List<ParticipantDto> participants);
+        ITournament Create(TournamentType type, List<ParticipantDto> participants);
     }
 }

@@ -26,16 +26,16 @@ namespace book_bracket.Services
             _userInterface.Write("Thanks. Let's get started on comparing them.");
 
             string tournamentChoice = _userInterface.Choose("What kind of tournament do you want to use?",
-                                                            [.. Enum.GetValues<Tournament>().Select(type => type.ToString())]);
+                                                            [.. Enum.GetValues<TournamentType>().Select(type => type.ToString())]);
 
-            _ = Enum.TryParse(tournamentChoice, true, out Tournament tournamentType);
+            _ = Enum.TryParse(tournamentChoice, true, out TournamentType tournamentType);
 
             List<ParticipantDto> participants = [.. favoriteBooks.Select(book =>
             {
                 return new ParticipantDto()
                 {
                   Id = book.Id,
-                  Name = book.ToString(),  
+                  Name = book.ToString(),
                 };
             })];
 
@@ -84,11 +84,11 @@ namespace book_bracket.Services
 
                 string? name = _userInterface.Read("Name:");
 
-                while (string.IsNullOrWhiteSpace(name))
+                if (string.IsNullOrWhiteSpace(name))
                 {
-                    _userInterface.Warn("Please input a valid name.");
+                    _userInterface.Warn($"No favorite book from {month}.");
 
-                    name = _userInterface.Read();
+                    continue;
                 }
 
                 string? author = _userInterface.Read("Author:");

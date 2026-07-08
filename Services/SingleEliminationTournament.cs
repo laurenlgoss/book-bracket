@@ -38,7 +38,7 @@ namespace book_bracket.Services
             RoundNumber++;
         }
 
-        public void RecordResult(Tuple<ParticipantDto, ParticipantDto?> match, ParticipantDto winner)
+        public void RecordMatchResult(Tuple<ParticipantDto, ParticipantDto?> match, ParticipantDto winner)
         {
             MatchDto matchDto = new()
             {

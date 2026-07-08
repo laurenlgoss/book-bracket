@@ -1,6 +1,6 @@
 namespace book_bracket.Models.Enums
 {
-    public enum Tournament
+    public enum TournamentType
     {
         SingleElimination = 1,
         DoubleElimination = 2,

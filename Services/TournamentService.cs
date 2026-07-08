@@ -12,7 +12,7 @@ namespace book_bracket.Services
         private readonly IUserInterface _userInterface = userInterface
             ?? throw new ArgumentNullException(nameof(userInterface));
 
-        public ParticipantDto Start(Tournament type, List<ParticipantDto> participants)
+        public ParticipantDto Start(TournamentType type, List<ParticipantDto> participants)
         {
             ITournament tournament = _tournamentFactory.Create(type, participants);
 
@@ -43,7 +43,7 @@ namespace book_bracket.Services
 
                     _userInterface.Write($"[bold green]Winner: {winner.Name}[/]");
 
-                    tournament.RecordResult(match, winner);
+                    tournament.RecordMatchResult(match, winner);
                 }
 
                 tournament.NextRound();

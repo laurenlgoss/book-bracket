@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("book-bracket")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cabc0e06b9592ec98863060a55600816adb4e049")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0167322780e5bd8965ecc8c47d55b37d44b84e62")]
 [assembly: System.Reflection.AssemblyProductAttribute("book-bracket")]
 [assembly: System.Reflection.AssemblyTitleAttribute("book-bracket")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

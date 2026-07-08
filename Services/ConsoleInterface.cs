@@ -36,7 +36,12 @@ namespace book_bracket.Services
         {
             ArgumentException.ThrowIfNullOrWhiteSpace(message);
 
-            Console.Error.WriteLine(message);
+            if (!message.Contains("yellow"))
+            {
+                message = $"[yellow]{message}[/]";
+            }
+
+            AnsiConsole.MarkupLine(message);
         }
 
         public void Write(string message)
